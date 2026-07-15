@@ -1,69 +1,67 @@
-# 🔍 Base Network Airdrop Checker
+# 📈 Crypto Portfolio Tracker
 
-Check your wallet activity on Base (L2) and score your airdrop eligibility.
+![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green?logo=fastapi)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-> ⚠️ Not financial advice. Scores are estimates based on common airdrop criteria.
+Real-time crypto portfolio tracker API.  
+Prices are fetched from [CoinGecko](https://coingecko.com) — **free, no API key required**.
 
-## What it checks
+## ✨ Features
 
-- Total transactions & failed tx count
-- Wallet age (days since first tx)
-- Active days / weeks / months
-- Unique smart contracts interacted with
-- ETH volume sent
-- ERC-20 token diversity
-- Combined score with 🟢🟡🟠🔴 rating
+- Real-time prices for 10+ coins
+- 24h price change (%)
+- Total portfolio value in USD
+- Interactive API docs (Swagger UI)
+- Async requests — fast and efficient
 
-## Setup
+## 🛠 Stack
+
+- **Python 3.11+**
+- **FastAPI** — web framework
+- **httpx** — async HTTP requests to CoinGecko
+- **Pydantic v2** — data validation
+
+## 🚀 Getting Started
 
 ```bash
-# 1. Get a free API key at https://basescan.org/apis
-# 2. Open checker.py and set your key:
-#    API_KEY = "your_key_here"
-
-# 3. Install dependencies
-pip install requests
-
-# 4. Run
-python checker.py 0xYOUR_WALLET_ADDRESS
+git clone https://github.com/Lindagrey/crypto-tracker.git
+cd crypto-tracker
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
-## Example output
+Open in browser: **http://127.0.0.1:8000/docs**
 
-```
-══════════════════════════════════════════════════════════
-  🔍 BASE NETWORK AIRDROP CHECKER
-══════════════════════════════════════════════════════════
-  Address:      0x1234567890...a1b2c3
-  ETH Balance:  0.2341 ETH
+## 📡 Endpoints
 
-  📊 ACTIVITY METRICS
-  ──────────────────────────────────────────────────────
-  Transactions:     142  (failed: 3)
-  First tx:         2023-08-15  (304 days ago)
-  Active days:      47
-  Active weeks:     21
-  Active months:    9
-  Unique contracts: 38
-  Volume sent:      0.8412 ETH
-  Tokens used:      12
+| Method | URL | Description |
+|--------|-----|-------------|
+| `GET` | `/coins` | List supported coins |
+| `POST` | `/portfolio/add` | Add coin to portfolio |
+| `DELETE` | `/portfolio/remove/{ticker}` | Remove coin |
+| `GET` | `/portfolio` | Portfolio with live prices |
+| `GET` | `/price/{ticker}` | Price of a single coin |
 
-  ✅ AIRDROP CRITERIA
-  ──────────────────────────────────────────────────────
-  ✅  +1pt  10+ transactions
-  ✅  +2pt  50+ transactions
-  ✅  +3pt  100+ transactions
-  ✅  +2pt  30+ active days
-  ✅  +2pt  4+ active weeks
-  ...
+## 💡 Usage Examples
 
-══════════════════════════════════════════════════════════
-  SCORE:  24/31  (77%)   🟢 EXCELLENT
-══════════════════════════════════════════════════════════
+```bash
+# Add 0.5 BTC
+curl -X POST http://localhost:8000/portfolio/add \
+  -H "Content-Type: application/json" \
+  -d '{"ticker": "btc", "amount": 0.5}'
+
+# View portfolio
+curl http://localhost:8000/portfolio
+
+# Get single coin price
+curl http://localhost:8000/price/eth
 ```
 
-## Stack
+## 💰 Supported Coins
 
-- **Python 3.8+**
-- **requests** — HTTP calls to BaseScan API
-- BaseScan API (free tier, no credit card)
+`BTC` `ETH` `SOL` `BNB` `XRP` `ADA` `DOGE` `TON` `AVAX` `DOT`
+
+## 📄 License
+
+MIT
